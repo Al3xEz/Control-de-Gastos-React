@@ -16,6 +16,7 @@ const NuevoPresupuesto = ({
       setIsValidPresupuesto(false);
       return;
     }
+    localStorage.setItem("presupuesto", presupuesto ?? 0);
     setMensaje("");
     setIsValidPresupuesto(true);
   };
@@ -27,6 +28,7 @@ const NuevoPresupuesto = ({
           <div className="campo">
             <label htmlFor="">Definir Presupuesto</label>
             <input
+              value={presupuesto <= 0 ? "" : presupuesto}
               type="number"
               className="nuevo-presupuesto"
               placeholder="Añade tu presupuesto"

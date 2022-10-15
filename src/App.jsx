@@ -5,9 +5,15 @@ import NuevoGasto from "./components/NuevoGasto";
 import { generarId } from "./helpers";
 
 function App() {
-  const [presupuesto, setPresupuesto] = useState(0);
+  const [presupuesto, setPresupuesto] = useState(
+    Number(localStorage.getItem("presupuesto")) ?? 0
+  );
   const [isValidPresupuesto, setIsValidPresupuesto] = useState(false);
-  const [gastos, setGastos] = useState([]);
+  const [gastos, setGastos] = useState(
+    localStorage.getItem("gastos")
+      ? JSON.parse(localStorage.getItem("gastos"))
+      : []
+  );
   const [modal, setModal] = useState(false);
   const [animarModal, setAnimarModal] = useState(false);
   const [gastoEditar, setGastoEditar] = useState({});
@@ -20,6 +26,15 @@ function App() {
       }, 400);
     }
   }, [gastoEditar]);
+
+  useEffect(() => {
+    Number(localStorage.getItem("presupuesto")) > 0 &&
+      setIsValidPresupuesto(true);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("gastos", JSON.stringify(gastos) ?? []);
+  }, [gastos]);
 
   const guardarGasto = (gasto) => {
     if (gasto.id) {
@@ -36,8 +51,8 @@ function App() {
     setAnimarModal(false);
     setTimeout(() => {
       setModal(false);
+      setGastoEditar({});
     }, 400);
-    setGastoEditar({});
   };
 
   return (
