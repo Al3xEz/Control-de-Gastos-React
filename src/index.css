@@ -273,6 +273,7 @@ main {
   gap: 2rem;
   margin-bottom: 2rem;
   width: 100%;
+  cursor: pointer;
 }
 
 .cantidad-gasto {
@@ -308,9 +309,7 @@ main {
   font-size: 2.4rem;
   font-weight: 700;
 }
-.descripcion-gasto .nombre-gasto:hover {
-  cursor: pointer;
-}
+
 .descripcion-gasto .fecha-gasto {
   font-size: 1.8rem;
   font-weight: 900;

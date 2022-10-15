@@ -8,6 +8,8 @@ const NuevoGasto = ({
   animarModal,
   setAnimarModal,
   modal,
+  gastoEditar,
+  setGastoEditar,
 }) => {
   const handleNuevoGasto = () => {
     setModal(true);
@@ -28,6 +30,8 @@ const NuevoGasto = ({
 
       {modal && (
         <Modal
+          setGastoEditar={setGastoEditar}
+          gastoEditar={gastoEditar}
           setModal={setModal}
           animarModal={animarModal}
           setAnimarModal={setAnimarModal}

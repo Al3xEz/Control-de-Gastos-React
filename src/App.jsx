@@ -10,17 +10,34 @@ function App() {
   const [gastos, setGastos] = useState([]);
   const [modal, setModal] = useState(false);
   const [animarModal, setAnimarModal] = useState(false);
+  const [gastoEditar, setGastoEditar] = useState({});
+
+  useEffect(() => {
+    if (Object.keys(gastoEditar).length > 0) {
+      setModal(true);
+      setTimeout(() => {
+        setAnimarModal(true);
+      }, 400);
+    }
+  }, [gastoEditar]);
 
   const guardarGasto = (gasto) => {
-    gasto.id = generarId(); //Se le agrega el id unico al gasto.
-    gasto.fecha = Date.now();
-    setGastos([...gastos, gasto]); //Se agrega el gasto al array de gastos.
+    if (gasto.id) {
+      const gastosActualizados = gastos.map((item) =>
+        item.id === gasto.id ? gasto : item
+      );
+      setGastos(gastosActualizados);
+    } else {
+      gasto.id = generarId(); //Se le agrega el id unico al gasto.
+      gasto.fecha = Date.now();
+      setGastos([...gastos, gasto]); //Se agrega el gasto al array de gastos.
+    }
 
     setAnimarModal(false);
-
     setTimeout(() => {
       setModal(false);
     }, 400);
+    setGastoEditar({});
   };
 
   return (
@@ -36,10 +53,16 @@ function App() {
       {isValidPresupuesto && (
         <>
           <main>
-            <ListadoGastos gastos={gastos} />
+            <ListadoGastos
+              gastos={gastos}
+              setGastoEditar={setGastoEditar}
+              setGastos={setGastos}
+            />
           </main>
 
           <NuevoGasto
+            gastoEditar={gastoEditar}
+            setGastoEditar={setGastoEditar}
             guardarGasto={guardarGasto}
             modal={modal}
             setModal={setModal}

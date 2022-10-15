@@ -2,33 +2,52 @@ import { useState, useEffect } from "react";
 import Mensaje from "./Mensaje";
 import CerrarBtn from "../img/cerrar.svg";
 
-const Modal = ({ setModal, animarModal, setAnimarModal, guardarGasto }) => {
+const Modal = ({
+  setModal,
+  animarModal,
+  setAnimarModal,
+  guardarGasto,
+  gastoEditar,
+  setGastoEditar,
+}) => {
   const [nombre, setNombre] = useState("");
   const [cantidad, setCantidad] = useState("");
   const [categoria, setCategoria] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(false);
+  const [id, setId] = useState("");
+  const [fecha, setFecha] = useState("");
+
+  useEffect(() => {
+    if (Object.keys(gastoEditar).length > 0) {
+      setNombre(gastoEditar.nombre);
+      setCantidad(gastoEditar.cantidad);
+      setCategoria(gastoEditar.categoria);
+      setFecha(gastoEditar.fecha);
+      setId(gastoEditar.id);
+    }
+  }, []);
 
   const ocultarModal = () => {
     setAnimarModal(false);
     setTimeout(() => {
       setModal(false);
     }, 400);
+    setGastoEditar({});
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setBtnDisabled(true);
 
     if ([nombre, cantidad, categoria].includes("")) {
       setMensaje("Todos los campos son obligatorios");
       setTimeout(() => {
         setMensaje("");
-      }, 3000);
+      }, 4000);
       return;
     }
-
-    guardarGasto({ nombre, cantidad, categoria });
+    setBtnDisabled(true);
+    guardarGasto({ nombre, cantidad, categoria, id, fecha });
   };
 
   return (
@@ -47,7 +66,11 @@ const Modal = ({ setModal, animarModal, setAnimarModal, guardarGasto }) => {
           className={`formulario ${animarModal ? "animar" : "cerrar"}`}
           onSubmit={handleSubmit}
         >
-          <legend>Nuevo Gasto</legend>
+          <legend>
+            {Object.keys(gastoEditar).length > 0
+              ? "Editar Gasto"
+              : "Nuevo Gasto"}
+          </legend>
           {mensaje && <Mensaje msj={mensaje} tipo="error" />}
 
           <div className="campo">
@@ -71,7 +94,11 @@ const Modal = ({ setModal, animarModal, setAnimarModal, guardarGasto }) => {
               type="number"
               placeholder="Añade la Cantidad del Gasto: ej. 300"
               onChange={(event) => {
-                setCantidad(Number(event.target.value));
+                setCantidad(
+                  Number(event.target.value) > 0
+                    ? Number(event.target.value)
+                    : ""
+                );
               }}
             />
           </div>
@@ -98,7 +125,15 @@ const Modal = ({ setModal, animarModal, setAnimarModal, guardarGasto }) => {
             </select>
           </div>
 
-          <input disabled={btnDisabled} type="submit" value="Añadir Gasto" />
+          <input
+            disabled={btnDisabled}
+            type="submit"
+            value={
+              Object.keys(gastoEditar).length > 0
+                ? "Editar Gasto"
+                : "Añadir Gasto"
+            }
+          />
         </form>
       </div>
     </>
