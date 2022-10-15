@@ -34,7 +34,6 @@ const Modal = ({
       setModal(false);
       setGastoEditar({});
     }, 400);
-    
   };
 
   const handleSubmit = (event) => {

@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import IconoNuevoGasto from "../img/nuevo-gasto.svg";
 import Modal from "./Modal";
 
