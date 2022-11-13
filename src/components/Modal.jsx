@@ -53,88 +53,90 @@ const Modal = ({
   return (
     <>
       <div className="modal">
-        <div className="cerrar-modal">
-          <img
-            id="cerrar-modal-btn"
-            src={CerrarBtn}
-            alt="Cerrar Modal"
-            onClick={ocultarModal}
-          />
-        </div>
-
-        <form
-          className={`formulario ${animarModal ? "animar" : "cerrar"}`}
-          onSubmit={handleSubmit}
-        >
-          <legend>
-            {Object.keys(gastoEditar).length > 0
-              ? "Editar Gasto"
-              : "Nuevo Gasto"}
-          </legend>
-          {mensaje && <Mensaje msj={mensaje} tipo="error" />}
-
-          <div className="campo">
-            <label htmlFor="nombre">Nombre Gasto</label>
-            <input
-              value={nombre}
-              id="nombre"
-              type="text"
-              placeholder="Añade el Nombre del Gasto"
-              onChange={(event) => {
-                setNombre(event.target.value);
-              }}
+        <div className="modalContainer">
+          <div className="cerrar-modal">
+            <img
+              id="cerrar-modal-btn"
+              src={CerrarBtn}
+              alt="Cerrar Modal"
+              onClick={ocultarModal}
             />
           </div>
 
-          <div className="campo">
-            <label htmlFor="cantidad">Cantidad</label>
-            <input
-              value={cantidad}
-              id="cantidad"
-              type="number"
-              placeholder="Añade la Cantidad del Gasto: ej. 300"
-              onChange={(event) => {
-                setCantidad(
-                  Number(event.target.value) > 0
-                    ? Number(event.target.value)
-                    : ""
-                );
-              }}
-            />
-          </div>
-
-          <div className="campo">
-            <label htmlFor="categoria">Categoria</label>
-
-            <select
-              value={categoria}
-              name="categoria"
-              id="categoria"
-              onChange={(event) => {
-                setCategoria(event.target.value);
-              }}
-            >
-              <option value="">-- Seleccione --</option>
-              <option value="ahorro">Ahorro</option>
-              <option value="comida">Comida</option>
-              <option value="casa">Casa</option>
-              <option value="varios">Gastos Varios</option>
-              <option value="hobbies">Hobbies</option>
-              <option value="salud">Salud</option>
-              <option value="suscripciones">Suscripciones</option>
-            </select>
-          </div>
-
-          <input
-            disabled={btnDisabled}
-            type="submit"
-            value={
-              Object.keys(gastoEditar).length > 0
+          <form
+            className={`formulario ${animarModal ? "animar" : "cerrar"}`}
+            onSubmit={handleSubmit}
+          >
+            <legend>
+              {Object.keys(gastoEditar).length > 0
                 ? "Editar Gasto"
-                : "Añadir Gasto"
-            }
-          />
-        </form>
+                : "Nuevo Gasto"}
+            </legend>
+            {mensaje && <Mensaje msj={mensaje} tipo="error" />}
+
+            <div className="campo">
+              <label htmlFor="nombre">Nombre Gasto</label>
+              <input
+                value={nombre}
+                id="nombre"
+                type="text"
+                placeholder="Añade el Nombre del Gasto"
+                onChange={(event) => {
+                  setNombre(event.target.value);
+                }}
+              />
+            </div>
+
+            <div className="campo">
+              <label htmlFor="cantidad">Cantidad</label>
+              <input
+                value={cantidad}
+                id="cantidad"
+                type="number"
+                placeholder="Añade la Cantidad del Gasto: ej. 300"
+                onChange={(event) => {
+                  setCantidad(
+                    Number(event.target.value) > 0
+                      ? Number(event.target.value)
+                      : ""
+                  );
+                }}
+              />
+            </div>
+
+            <div className="campo">
+              <label htmlFor="categoria">Categoria</label>
+
+              <select
+                value={categoria}
+                name="categoria"
+                id="categoria"
+                onChange={(event) => {
+                  setCategoria(event.target.value);
+                }}
+              >
+                <option value="">-- Seleccione --</option>
+                <option value="ahorro">Ahorro</option>
+                <option value="comida">Comida</option>
+                <option value="casa">Casa</option>
+                <option value="varios">Gastos Varios</option>
+                <option value="hobbies">Hobbies</option>
+                <option value="salud">Salud</option>
+                <option value="suscripciones">Suscripciones</option>
+              </select>
+            </div>
+
+            <input
+              disabled={btnDisabled}
+              type="submit"
+              value={
+                Object.keys(gastoEditar).length > 0
+                  ? "Editar Gasto"
+                  : "Añadir Gasto"
+              }
+            />
+          </form>
+        </div>
       </div>
     </>
   );
